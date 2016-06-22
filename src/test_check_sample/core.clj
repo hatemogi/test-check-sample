@@ -1,5 +1,4 @@
-(ns test-check-sample.core
-  (:gen-class))
+(ns test-check-sample.core)
 
 (defn -main
   "I don't do a whole lot ... yet."
