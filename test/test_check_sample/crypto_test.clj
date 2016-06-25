@@ -10,9 +10,12 @@
                 (= (seq v)
                    (seq (decode-base64 (encode-base64 v))))))
 
-(defspec base64-test
-  100
-  base64-상호변환)
+(defspec base64-reverse-test base64-상호변환)
+
+(defspec base64-char-test
+  (prop/for-all [v gen/string]
+                (every? (set "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=")
+                        (encode-base64 (.getBytes v)))))
 
 (def 서명검증
   (prop/for-all [data gen/bytes
@@ -21,6 +24,4 @@
                 (verify (:public keypair) data
                         (sign (:private keypair) data))))
 
-(defspec signature-test
-  10
-  서명검증)
+(defspec signature-test 10 서명검증)
