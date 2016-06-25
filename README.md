@@ -203,13 +203,17 @@ $ lein test
 
 [데모 프로젝트][]에는 예제 파일이 하나 더 있으니, 참고해주세요.
 
-[test/test_check_sample/crypto_test.clj](https://github.com/hatemogi/test-check-sample/blob/master/test/test_check_sample/crypto_test.clj)
+> [test/test_check_sample/crypto_test.clj](https://github.com/hatemogi/test-check-sample/blob/master/test/test_check_sample/crypto_test.clj)
 
 자세한 설명도 없이 예제를 마구 보여드렸습니다. 이제 충분한 관심이 가시고, 직접 적용해보시려면 test.check 깃헙 프로젝트에 있는 설명서를 참고해서 시작해 보시면 좋을 것 같습니다.
 
 ## 결론
 
 이상, 더 강력하게 테스팅해서 우리의 코드를 더 탄탄하게 작성하는 데 도움이 되는 "속성 기반 테스팅"에 대해 간단히 설명하고, 클로저 언어 환경에서 직접 한번 사용해 보았습니다.
+
+## 참고로
+
+참고로, 클로저 1.9에는 test.check를 포용하는 clojure.spec이 추가됩니다!
 
 ## 관련 문서
 
