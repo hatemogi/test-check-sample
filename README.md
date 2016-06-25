@@ -46,7 +46,7 @@
 
 * [GitHub — clojure/test.check: QuickCheck for Clojure](https://github.com/clojure/test.check)
 
-아래 유투브 영상에서 자세한 설명을 들을 수 있습니다.
+아래 유튜브 영상에서 자세한 설명을 들을 수 있습니다.
 
 * [Reid Draper의 clojure.test.check 발표 영상](https://youtu.be/JMhNINPo__g)
 
@@ -62,7 +62,7 @@
 
 우선, 아래 프로젝트를 받아서 한번 돌려보시고 계속 보시면 좋을 것 같습니다.
 
-``` bash
+```bash
 $ git clone https://github.com/hatemogi/test-check-sample
 $ cd test-check-sample
 $ lein test
@@ -76,7 +76,7 @@ $ lein test
 
 우선, 클로저에서의 보통 유닛 테스트 케이스를 볼까요?
 
-전체소스: [test/test_check_sample/unit_test.clj>](https://github.com/hatemogi/test-check-sample/blob/master/test/test_check_sample/unit_test.clj)
+> 전체소스: [test/test_check_sample/unit_test.clj](https://github.com/hatemogi/test-check-sample/blob/master/test/test_check_sample/unit_test.clj)
 
 ```clojure
 (ns test-check-sample.unit-test
@@ -89,11 +89,11 @@ $ lein test
     (is (.startsWith "가나다라마" "가나"))))
 ```
 
-`clojure.test`의 함수와 매크로로 테스트케이스를 정의했습니다. 보시다시피 구체적인 입력값과 기대하는 결과값을 정의하는 방식입니다.
+`clojure.test`의 함수와 매크로로 테스트케이스를 정의했습니다. 입력값과 기대하는 결과값을 구체적으로 정의하는 방식입니다.
 
-### 첫번째 속성 기반 테스트
+### 첫 번째 속성 기반 테스트
 
-전체소스: [test/test_check_sample/basic_test.clj>](https://github.com/hatemogi/test-check-sample/blob/master/test/test_check_sample/basic_test.clj)
+> 전체소스: [test/test_check_sample/basic_test.clj](https://github.com/hatemogi/test-check-sample/blob/master/test/test_check_sample/basic_test.clj)
 
 우선 필요한 다른 네임스페이스를 적절히 참조합니다.
 
@@ -105,7 +105,7 @@ $ lein test
             [clojure.test.check.clojure-test :refer [defspec]]))
 ```
 
-이거저거 참조할 게 좀 많네요.
+참조할 네임스페이스가 좀 많네요.
 
 그다음, 처음에 예로 든, sort 함수의 속성을 실제 코드로 작성하면 아래와 같습니다.
 
@@ -115,6 +115,17 @@ $ lein test
                 (let [s (sort v)]
                   (< (first s) (last s)))))
 ```
+
+처음 설명 드렸던 대로, 아래 속성을 테스트하는 코드입니다.
+
+> 임의의 정수 배열을 정렬해서 임의의 두 아이템을 놓고 보면, 첫 번째 아이템이 두 번째 아이템보다 작거나 같아야 한다.
+
+매 줄 차례로 설명 드리겠습니다.
+
+1. `defspec`은 `clojure.test`와의 호환성을 위한 매크로입니다. `clojure.test`에서 쓰는 `deftest`와 마찬가지로 테스트용 함수를 만드는 매크로라서, 기존의 테스팅 환경에서 그대로 쓸 수 있게 해줍니다. 우리 프로젝트에서는 `lein test`로 평범하게 테스트할 수 있게 해주는 것이지요. 그 다음에는 `정렬결과-테스트`라는 테스트 이름이자 함수명이 오고요, 그다음 `100`이라는 숫자는 몇 번이나 임의의 테스트 셋을 만들어 낼지를 지정합니다. 이 경우 100개의 테스트 데이터를 생성해서 진행하는 게 됩니다. 생략하면 기본값이 100이라서 이 경우 생략해도 됩니다.
+1. `prop/for-all`은 매크로인데, 처음에 테스트셋 생성하는 바인딩을 정의하고, 그다음 표현으로 실제 검증 내용이 옵니다. `gen` 네임스페이스에는 각종 생성함수가 들어있습니다. `gen/not-empty`는 빈(empty) 컬렉션 생성을 제외하게 합니다. 그 안에서 사용한 `gen/vector`는 벡터를 생성하는 함수인데, 제일 안에 있는 `gen/int`가 정수를 임의로 만들어내는 생성 함수인 겁니다. 요약하면, 임의의 정수를 담고 있는 벡터를 만들어 내되, 빈 벡터는 제외하는 것이지요.
+1. 셋 째줄은 평범한 클로저 구문이고요, 둘 째줄에서 만든 `v` 벡터를 `sort`한 결과를 `s`에 바인딩 합니다.
+1. 마지막 줄은 `sort`한 결과 `s`의 첫 번째 아이템과 두 번째 아이템을 비교해서 더 작은지 확인하는 구문입니다.
 
 ## 관련 문서
 
