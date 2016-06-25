@@ -14,13 +14,11 @@
   (prop/for-all [v (gen/vector gen/int)]
                 (= (sort v) (sort (sort v)))))
 
+(defspec 역순-테스트
+  (prop/for-all [xs (gen/vector gen/int)
+                 ys (gen/vector gen/int)]
+                (= (reverse (concat xs ys)) (concat (reverse ys) (reverse xs)))))
 
 (defspec 실패범위-추려내기 100
   (prop/for-all [v (gen/vector gen/int)]
                 (not (some #{42} v))))
-
-(defspec 역순-테스트
-  (prop/for-all [xs (gen/vector gen/int)
-                 ys (gen/vector gen/int)]
-                (= xs (reverse (reverse xs)))
-                (= (reverse (concat xs ys)) (concat (reverse ys) (reverse xs)))))
