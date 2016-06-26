@@ -5,9 +5,9 @@
             [clojure.test.check.clojure-test :refer [defspec]]))
 
 (defspec 정렬결과-테스트 100
-  (prop/for-all [v (gen/not-empty (gen/vector gen/int))]
-                (let [s (sort v)]
-                  (< (first s) (last s)))))
+  (prop/for-all [v (gen/vector gen/int)]
+                (every? (fn [[a b]] (<= a b))
+                        (partition 2 1 (sort v)))))
 
 (defspec 정렬-멱등성-테스트 100
   ;; 멱등성: 연산을 여러 번 적용하더라도 결과가 달라지지 않는 성질
